@@ -1,0 +1,5 @@
+assets/
+reports/
+cache/
+.idea/
+mylab/__pycache__/
