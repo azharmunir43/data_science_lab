@@ -1,4 +1,4 @@
-from shared_keys.shared_keys import *
+from assets.constants import *
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 

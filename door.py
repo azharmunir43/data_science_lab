@@ -3,7 +3,7 @@ import pandas as pd
 from mylab.reporting import *
 from mylab.analytics import *
 import os
-from shared_keys.shared_keys import *
+from assets.constants import *
 
 # df = pd.read_excel(os.path.join(DATA_DIRECTORY, 'Final-2012-Raw-V0.1.xlsx'))
 df = pd.read_csv(os.path.join(DATA_DIRECTORY,'final.csv'), low_memory=False)
