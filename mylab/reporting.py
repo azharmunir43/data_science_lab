@@ -3,7 +3,7 @@ import numpy as np
 from docx import Document
 from docx.shared import Inches
 from mylab.preprocessing import *
-from shared_keys.shared_keys import *
+from assets.constants import *
 from mylab.analytics import *
 
 
@@ -68,9 +68,9 @@ class DataReporting():
 
     # def feature_ranking_report():
     @staticmethod
-    def generate_data_summary_report(
+    def data_analysis_intro(
             input_data_frame, # Provide input data here
-            output_file_name, # file Name along with directory
+            output_file_name, # File Name along with directory
             data_title='', # Provide A title for this data
             description='', # Provide general description that what this data is all about
             our_target_column = '', # Provide the name of column that contains our target
@@ -126,7 +126,7 @@ class DataReporting():
             document.add_picture(os.path.join(PROJECT_CACHE, 'temp_target_summary_plot.png'), width=Inches(6.5))
 
         if Export:
-            document.save(output_file_name)
+            document.save(os.path.join(OUTPUT_REPORT_DIRECTORIES, output_file_name))
     @staticmethod
     def generate_data_quality_report_for_individual_columns(
             input_data_frame,
