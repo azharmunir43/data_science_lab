@@ -7,7 +7,7 @@ from assets.constants import *
 from math import floor
 df = pd.read_csv('D:\Workplace\Techlogix\Machine Learning\FSI\BoP\'s Customer Balance Prediction\Azhar Munir\data.csv', low_memory=False)
 
-# DataReporting.data_analysis_intro(df, 'ABP-Intro.docx', 'Account Balances Data', '', '', True)
+# DataReporting.initial_data_exploration_report(df, 'ABP-Intro.docx', 'Account Balances Data', '', '', True)
 
 
 

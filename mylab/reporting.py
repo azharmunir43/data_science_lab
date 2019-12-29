@@ -15,7 +15,6 @@ class DataReporting():
     def describe_data_frame_as_excel(input_data_frame, output_file, Export=False):
 
         numeric_data = input_data_frame.select_dtypes(include=[np.number, np.int32, np.int64])
-
         nominal_data = input_data_frame.select_dtypes(include=[np.object])
 
         numeric_data_description = numeric_data.describe(include=[np.number]).T
@@ -66,15 +65,14 @@ class DataReporting():
 
         return numeric_data_description
 
-    # def feature_ranking_report():
+
     @staticmethod
-    def data_analysis_intro(
+    def initial_data_exploration_report(
             input_data_frame, # Provide input data here
             output_file_name, # File Name along with directory
             data_title='', # Provide A title for this data
             description='', # Provide general description that what this data is all about
-            our_target_column = '', # Provide the name of column that contains our target
-            Export = False
+            target_column ='' # Provide the name of column that contains our target
         ):
         no_rows, no_cols = input_data_frame.shape[0], input_data_frame.shape[1]
         # Create a document file
@@ -85,6 +83,7 @@ class DataReporting():
         if description != '':
             document.add_heading('Brief Description', level=5)
             document.add_paragraph(description)
+
         document.add_paragraph('This data contains {} records with {} number of columns in each record.'.format(no_rows, no_cols))
         document.add_heading('Basic Stats of Data', level=5)
 
@@ -114,21 +113,24 @@ class DataReporting():
             row_cells[1].text = ['Categorical' if summary_df.loc[index]['Data Type'] == np.object else 'Numeric']
             row_cells[2].text = ['Yes' if summary_df.loc[index]['Contains Null'] else 'No']
             row_cells[3].text = str(summary_df.loc[index]['Missing Percentage'])
-        document.add_heading('Data Quality Plot', level=5)
-        DataAnalytics.plot_basic_stats_of_data(input_data_frame, os.path.join(PROJECT_CACHE, 'temp_data_summary_plot.png'),data_title, True)
-        document.add_picture(os.path.join(PROJECT_CACHE, 'temp_data_summary_plot.png'), width=Inches(6.0))
 
-        if our_target_column != '':
+        # document.add_heading('Data Quality Plot', level=5)
+        # DataAnalytics.plot_basic_stats_of_data(input_data_frame, os.path.join(PROJECT_CACHE, 'temp_data_summary_plot.png'),data_title, True)
+        # document.add_picture(os.path.join(PROJECT_CACHE, 'temp_data_summary_plot.png'), width=Inches(6.0))
+
+        if target_column != '':
             document.add_heading('Target Column', level=5)
-            document.add_paragraph(our_target_column)
+            document.add_paragraph(target_column)
             document.add_heading('Target Column\'s Stats' , level=5)
-            TargetAnalytics.custom_barplot(input_data_frame, os.path.join(PROJECT_CACHE, 'temp_target_summary_plot.png'), our_target_column, True)
+            TargetAnalytics.custom_barplot(input_data_frame, os.path.join(PROJECT_CACHE, 'temp_target_summary_plot.png'), target_column, True)
             document.add_picture(os.path.join(PROJECT_CACHE, 'temp_target_summary_plot.png'), width=Inches(6.5))
 
-        if Export:
             document.save(os.path.join(OUTPUT_REPORT_DIRECTORIES, output_file_name))
+
+
+
     @staticmethod
-    def generate_data_quality_report_for_individual_columns(
+    def data_analysis_report(
             input_data_frame,
             consider_custom_defined_classification_of_columns = False,
             conf_cols_dict = {},
